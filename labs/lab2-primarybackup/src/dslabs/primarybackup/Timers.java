@@ -17,7 +17,21 @@ final class PingTimer implements Timer {
 final class ClientTimer implements Timer {
   static final int CLIENT_RETRY_MILLIS = 100;
 
-  // Your code here...
+  private final int sequenceNum; // the outstanding command's sequence number
 }
 
-// Your code here...
+@Data
+final class ForwardRetryTimer implements Timer {
+  static final int FORWARD_RETRY_MILLIS = 50;
+
+  private final int viewNum; // the view number being forwarded to
+
+  private final int clientSeqNum; // the client command's sequence number
+}
+
+@Data
+final class StateTransferTimer implements Timer {
+  static final int STATE_TRANSFER_RETRY_MILLIS = 50;
+
+  private final int viewNum; // the view number being transferred to
+}

@@ -1,5 +1,8 @@
 package dslabs.primarybackup;
 
+import dslabs.atmostonce.AMOApplication;
+import dslabs.atmostonce.AMOCommand;
+import dslabs.atmostonce.AMOResult;
 import dslabs.framework.Message;
 import lombok.Data;
 
@@ -20,16 +23,44 @@ class ViewReply implements Message {
 }
 
 /* -----------------------------------------------------------------------------------------------
+ *  Client-Primary Messages
+ * ---------------------------------------------------------------------------------------------*/
+@Data
+class ClientRequest implements Message {
+  private final AMOCommand command;
+}
+
+@Data
+class ServerReply implements Message {
+  private final AMOResult result;
+}
+
+/* -----------------------------------------------------------------------------------------------
  *  Primary-Backup Messages
  * ---------------------------------------------------------------------------------------------*/
 @Data
-class Request implements Message {
-  // Your code here...
+class ForwardRequest implements Message {
+  private final AMOCommand command;
+  private final int viewNum;
 }
 
 @Data
-class Reply implements Message {
-  // Your code here...
+class ForwardAck implements Message {
+  private final boolean success;
+  private final AMOCommand command;
+  private final int viewNum;
 }
 
-// Your code here...
+/* -----------------------------------------------------------------------------------------------
+ *  State Transfer Messages
+ * ---------------------------------------------------------------------------------------------*/
+@Data
+class StateTransferRequest implements Message {
+  private final int viewNum;
+  private final AMOApplication state;
+}
+
+@Data
+class StateTransferAck implements Message {
+  private final int viewNum;
+}
